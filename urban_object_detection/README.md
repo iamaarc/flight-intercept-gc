@@ -1,30 +1,81 @@
-# Object detection in an urban environment
+🚗 Object Detection in an Urban Environment
+This project demonstrates how to build, train, and deploy an object detection model for urban driving scenarios using the TensorFlow Object Detection API and Amazon SageMaker.
 
-In this project, you will learn how to train an object detection model using the [Tensorflow Object Detection API](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/index.html) and [AWS Sagemaker](https://aws.amazon.com/sagemaker/). At the end of this project, you will be able to generate videos such as the one below. 
+At the end of this project, the model is capable of detecting vehicles, pedestrians, and cyclists in urban settings using Waymo Open Dataset sequences.
 
-<p align="center">
-    <img src="data/animation.gif" alt="drawing" width="600"/>
-</p>
+<p align="center"> <img src="data/animation.gif" alt="Urban Object Detection Demo" width="600"/> </p>
+📦 Project Structure
+This repository includes two Jupyter notebooks:
 
-## Installation
+Notebook	Description
+1_train_model.ipynb	Launches a training job on AWS SageMaker and streams TensorBoard logs
+2_deploy_model.ipynb	Deploys the trained model, runs inference on validation/test data, and generates a GIF visualization
 
-Refer to the **Setup Instructions** page in the classroom to setup the Sagemaker Notebook instance required for this project.
+✅ Highlights
+Trained an object detection model on the Waymo Open Dataset
 
->Note: The `conda_tensorflow2_p310` kernel contains most of the required packages for this project. The notebooks contain lines for manual installation when required.
+Used EfficientDet D1 as the primary pretrained model architecture
 
-## Usage
+Fine-tuned training hyperparameters (batch size, steps, learning rate) using the pipeline.config file
 
-This repository contains two notebooks:
-* [1_train_model](1_model_training/1_train_model.ipynb): this notebook is used to launch a training job and create tensorboard visualizations. 
-* [2_deploy_model](2_run_inference/2_deploy_model.ipynb): this notebook is used to deploy your model, run inference on test data and create a gif similar to the one above.
+Evaluated performance using Mean Average Precision (mAP) and TensorBoard visualizations
 
-First, run `1_train_model.ipynb` to train your model. Once the training job is complete, run `2_deploy_model.ipynb` to deploy your model and generate the animation.
+Deployed using custom-built Docker containers and AWS ECR/SageMaker integration
 
-Each notebook contains the instructions for running the code, as well the requirements for the writeup. 
->Note: Only the first notebook requires a write up. 
+Inference pipeline outputs results in annotated frames and a GIF animation
 
-## Useful links
-* The Tensorflow Object Detection API tutorial is a great resource to debug your code. This [section](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#configure-the-training-pipeline) in particular will teach you how to edit the `pipeline.config` file to update
-your training job.
+⚙️ Setup & Installation
+Please refer to the Setup Instructions provided in the Udacity classroom to configure your SageMaker notebook instance.
 
-* [This blog post](https://aws.amazon.com/blogs/machine-learning/training-and-deploying-models-using-tensorflow-2-with-the-object-detection-api-on-amazon-sagemaker/) teaches how to label data, train and deploy a model with the Tensorflow Object Detection API and AWS Sagemaker.
+Recommended Kernel: conda_tensorflow2_p310
+Use manual installs inside notebooks where required (%pip install tensorflow_io sagemaker)
+
+📈 How to Use
+Clone this repository to your SageMaker instance:
+
+bash
+Copy
+Edit
+git clone https://github.com/iamaarc/urban-object-detection.git
+cd urban-object-detection
+Run the notebook: 1_train_model.ipynb
+
+Configure model training settings (model, steps, logs)
+
+Train your model and track progress via TensorBoard
+
+Run the notebook: 2_deploy_model.ipynb
+
+Load the exported model
+
+Run inference on test images
+
+Visualize results (video/GIF output)
+
+📁 Outputs
+Trained model checkpoints (/opt/training)
+
+TensorBoard logs (s3://<your-bucket>/logs)
+
+Annotated video frames
+
+Generated GIF of inference output
+
+🧠 Model & Architecture
+Model Used: EfficientDet D1
+Input Image Resolution: 640x640
+Transfer Learning: Pretrained on COCO 2017
+Frameworks: TensorFlow 2.x, Object Detection API
+
+📚 References & Resources
+📘 TensorFlow Object Detection API Documentation
+
+📘 Training on AWS SageMaker with TensorFlow 2
+
+📘 Waymo Open Dataset
+
+📘 Udacity SDCND - Object Detection Project Guide
+
+👤 Author
+Aayush Chugh
+LinkedIn | GitHub | Email
