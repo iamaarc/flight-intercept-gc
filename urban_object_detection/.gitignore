@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-.DS_Store
 
 # C extensions
 *.so
@@ -29,8 +28,6 @@ share/python-wheels/
 MANIFEST
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -56,20 +53,20 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Django
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-# Flask stuff:
+# Flask
 instance/
 .webassets-cache
 
-# Scrapy stuff:
+# Scrapy
 .scrapy
 
-# Sphinx documentation
+# Sphinx
 docs/_build/
 
 # PyBuilder
@@ -86,23 +83,19 @@ ipython_config.py
 .python-version
 
 # pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+# Pipfile.lock # ← Uncomment this if you want to ignore it
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+# PEP 582
 __pypackages__/
 
-# Celery stuff
+# Celery
 celerybeat-schedule
 celerybeat.pid
 
-# SageMath parsed files
+# SageMath
 *.sage.py
 
-# Environments
+# Virtual environments
 .env
 .venv
 env/
@@ -111,20 +104,39 @@ ENV/
 env.bak/
 venv.bak/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*~
 
-# Rope project settings
-.ropeproject
+# Docker
+docker/models/
+*.tar.gz
+*.tar
+*.img
 
-# mkdocs documentation
-/site
+# TensorBoard & SageMaker logs
+*.tfevents.*
+sagemaker_logs/
+logs/
+checkpoints/
+source_dir/checkpoint/
+source_dir/tensorboard/
+source_dir/pipeline.config
+*.pbtxt
 
-# mypy
+# AWS & ECR
+.ecr_image_fullname.txt
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# MyPy / Pyre / Type hints
 .mypy_cache/
 .dmypy.json
 dmypy.json
-
-# Pyre type checker
 .pyre/
