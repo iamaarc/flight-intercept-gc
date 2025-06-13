@@ -1,5 +1,6 @@
 # Flight-Intercept Guidance & Control – System Sandbox
 
+Day 1: Define sandbox, pick simulator, finalize quadrotor/environment/sensors, document in README.
 ## Simulator
 - **Choice:** Custom Python-based ODE simulator.
 - **Justification:** 
@@ -28,4 +29,18 @@
 
 ## Documentation & Reproducibility
 - All parameters and modeling choices documented here and in `/doc/tech_note.md`.
-- Simulation reproducible with one command:  
+- Simulation reproducible with one command:
+
+Day 2: Implement target motion (two profiles), integrate into your sim.
+## Target Motion Profiles
+
+1. **Static/Low-Speed Drift**
+   - Type: Straight-line, constant velocity
+   - Example bounds: Speed = 0–2 m/s, Acceleration ≈ 0
+
+2. **Maneuvering Trajectory**
+   - Type: Constant turn-rate (circular), can be extended to random bursts
+   - Example bounds: Speed = 2–5 m/s, Turn-rate = 0.1–0.5 rad/s, Acceleration ≤ 2 m/s²
+
+Both profiles are implemented in `src/target.py` and can be selected in the simulator.
+
