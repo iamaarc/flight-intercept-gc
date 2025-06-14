@@ -1,35 +1,25 @@
-# src/target.py
-
 import numpy as np
 
 class TargetProfile:
-    def __init__(self, start_pos, start_vel):
-        self.position = np.array(start_pos, dtype=float)
-        self.velocity = np.array(start_vel, dtype=float)
-        self.time = 0.0
+    """Straight-line target profile."""
+    def __init__(self, position, velocity, speed=1.0):
+        self.position = np.array(position, dtype=float)
+        self.velocity = np.array(velocity, dtype=float)
+        self.velocity = self.velocity / np.linalg.norm(self.velocity) * speed
 
     def update(self, dt):
-        """Straight-line, constant velocity."""
         self.position += self.velocity * dt
-        self.time += dt
-        return self.position.copy()
 
-class ConstantTurnTarget(TargetProfile):
-    def __init__(self, start_pos, speed, turn_rate_rad_s, heading_deg=0):
-        heading = np.deg2rad(heading_deg)
-        velocity = [speed * np.cos(heading), speed * np.sin(heading), 0]
-        super().__init__(start_pos, velocity)
+class ConstantHeadingTarget:
+    """Target moving with constant turn rate (circular arc)."""
+    def __init__(self, position, velocity, speed=1.0, turn_rate=np.deg2rad(45)):
+        self.position = np.array(position, dtype=float)
+        self.heading = np.arctan2(velocity[1], velocity[0])
         self.speed = speed
-        self.turn_rate = turn_rate_rad_s  # rad/s
-        self.heading = heading
+        self.turn_rate = turn_rate  # radians per second
 
     def update(self, dt):
         self.heading += self.turn_rate * dt
-        self.velocity = np.array([
-            self.speed * np.cos(self.heading),
-            self.speed * np.sin(self.heading),
-            0
-        ])
-        self.position += self.velocity * dt
-        self.time += dt
-        return self.position.copy()
+        dx = self.speed * np.cos(self.heading) * dt
+        dy = self.speed * np.sin(self.heading) * dt
+        self.position += np.array([dx, dy])
