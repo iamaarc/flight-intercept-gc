@@ -73,7 +73,7 @@ Visualized both target and pursuer trajectories to validate the guidance logic.
 Results
 The plot below shows the target (blue) and the pursuer (orange) trajectories. The pursuer successfully follows the target’s path, demonstrating the basic functionality of the guidance law.
 
-
+![guidance_demo](doc/day3_guidance_demo.png)
 Figure: Simulated interception with Pure Pursuit guidance. The interceptor (orange) attempts to follow the target (blue) along a circular path.
 
 Notes:
