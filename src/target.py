@@ -23,3 +23,4 @@ class ConstantHeadingTarget:
         dx = self.speed * np.cos(self.heading) * dt
         dy = self.speed * np.sin(self.heading) * dt
         self.position += np.array([dx, dy])
+
