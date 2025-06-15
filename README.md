@@ -60,11 +60,13 @@ Baseline for more advanced interception strategies.
 3D:
 Target follows 3D helix or circular path.
 Pursuer initialized at offset, uses direct pursuit.
-Results
-2D:
+## Day 3: Guidance & Pursuit Demo
 
+**Guidance Demo**  
+![Guidance Demo](doc/day3_guidance_demo.png)
 
-3D:
+**3D Pure Pursuit**  
+![3D Pure Pursuit](doc/day3_pure_pursuit_3d.png)
 
 
 Orange = pursuer, Blue = target.
@@ -80,11 +82,22 @@ Smoother and more robust than simple pursuit.
 3D:
 Outer loop PD controller.
 Attitude control for roll/pitch/yaw (with demo plots).
-Results
-2D:
+## Day 4: Outer-Loop Position + Attitude Control
 
+**3D Position + Attitude Control**  
+![3D Position + Attitude Control](doc/day4_3d_position_attitude_control.png)
 
-3D:
+**Position + Attitude Control (Demo 1)**  
+![Position Attitude Demo 1](doc/day4_position_attitude_demo.png)
+
+**Position + Attitude Control (Demo 2)**  
+![Position Attitude Demo 2](doc/day4_position_attitude_control_demo.png)
+
+**Position Controller**  
+![Position Controller](doc/day4_position_controller_demo.png)
+
+**Pursuit Animation**  
+![Pursuit Animation](doc/day4_pursuit_animation.gif)
 
 
 Day 5: Animation, Robustness, Extensions
