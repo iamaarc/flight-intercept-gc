@@ -1,3 +1,5 @@
+import numpy as np
+
 class PositionController:
     """
     PD Position Controller for multi-dimensional position control (2D/3D).
