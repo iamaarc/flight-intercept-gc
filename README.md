@@ -81,3 +81,29 @@ Notes:
 The pure pursuit approach is a baseline for interception strategies; more advanced logic (e.g., proportional navigation) could be implemented in future steps.
 The simulation uses fixed parameters for clarity; these can be adjusted to explore robustness and tuning.
 
+2. Outer-Loop Position Controller
+Day 4: Outer-Loop Position Controller
+
+Goal
+Implement and test a position controller that allows the pursuer (interceptor) to smoothly follow the guidance law computed in Day 3.
+The controller converts the desired direction/velocity command from the guidance law into position (and ultimately force/acceleration) commands suitable for a drone or robot.
+What Was Done
+Developed a PD (Proportional-Derivative) Position Controller in src/position_controller.py.
+Takes desired position (from guidance) and current position, outputs a velocity command or force vector.
+Parameters tuned for stable tracking with minimal overshoot.
+Integrated the position controller into the simulation loop.
+The pursuer now tracks a moving target using both guidance and closed-loop position control (vs. just kinematic “chase”).
+Results visualized with a plot comparing target and pursuer trajectories.
+Results
+The following figure shows the effect of the position controller in intercepting a moving target.
+
+The target follows a maneuvering (arc) trajectory.
+The pursuer uses both the guidance law and the position controller to track and intercept.
+![ Outer-Loop Position Controller](doc/day4_psoition_controller_demo.png)
+Figure: Target (blue) and pursuer (orange) trajectories. The pursuer starts farther away and intercepts the target using outer-loop PD position control.
+
+Notes:
+The position controller adds robustness and smoothness, compensating for noise or disturbances (as would be present on a real drone).
+Gains can be further tuned for faster response or reduced overshoot.
+
+
