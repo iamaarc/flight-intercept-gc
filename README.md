@@ -38,12 +38,12 @@ Implemented Profiles (in src/target.py):
 Straight-Line Motion: Constant velocity, user-selectable speed/direction.
 Constant Turn/Circular Motion: User-defined turn rate/radius.
 Results
-2D:
 
+**2D Target Motions**  
 ![Target Motion Profiles](doc/day2_target_profiles.png)
-3D:
-![Target Trajectory 3D](doc/day2_target_trajectory.png)
 
+**3D Target Trajectory**  
+![Target Trajectory 3D](doc/day2_target_trajectory.png)
 
 Simulated trajectories: Blue = straight/circular (2D), Helix (3D).
 
