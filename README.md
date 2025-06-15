@@ -99,7 +99,7 @@ The following figure shows the effect of the position controller in intercepting
 
 The target follows a maneuvering (arc) trajectory.
 The pursuer uses both the guidance law and the position controller to track and intercept.
-![ Outer-Loop Position Controller](doc/day4_psoition_controller_demo.png)
+![ Outer-Loop Position Controller](doc/day4_position_controller_demo.png)
 Figure: Target (blue) and pursuer (orange) trajectories. The pursuer starts farther away and intercepts the target using outer-loop PD position control.
 
 Notes:
