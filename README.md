@@ -24,6 +24,7 @@ Key goals: rapid prototyping, transparent logic, and reproducibility for researc
 
 **Environment**
 - Gravity, ground plane, (optional) wind/disturbance.
+![Target Motion Profiles](doc/day2_target_profiles.png)
 
 **Reproducibility:**  
 All parameters in `/doc/tech_note.md`.  
