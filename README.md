@@ -40,8 +40,9 @@ Constant Turn/Circular Motion: User-defined turn rate/radius.
 Results
 2D:
 
-
+![Target Motion Profiles](doc/day2_target_profiles.png)
 3D:
+![Target Trajectory 3D](doc/day2_target_trajectory.png)
 
 
 Simulated trajectories: Blue = straight/circular (2D), Helix (3D).
