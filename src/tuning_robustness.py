@@ -149,3 +149,174 @@ plot_bar("miss_distance", "Disturbance", "Disturbance", "Miss Distance (m)", "mi
 
 print("\nAll experiments complete. Plots saved to /doc and metrics to tuning_robustness_metrics.csv")
 
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import time
+
+from position_controller import PositionController  # adjust import if your class is elsewhere
+
+# --- Settling time & Time-to-Intercept ---
+def compute_settling_time(distances, dt, tol=1.0, duration=1.0):
+    window = int(duration / dt)
+    for i in range(len(distances) - window):
+        if np.all(distances[i:i+window] < tol):
+            return i * dt
+    return None
+
+def compute_time_to_intercept(distances, dt, tol=1.0):
+    indices = np.where(distances < tol)[0]
+    return float(indices[0] * dt) if len(indices) > 0 else None
+
+# --- Simulated target (3D helix) ---
+def helical_target(t, radius=5, z_rate=0.2, speed=1.0):
+    x = radius * np.cos(speed * t)
+    y = radius * np.sin(speed * t)
+    z = z_rate * t
+    return np.array([x, y, z])
+
+# --- Simulation runner ---
+def run_sim(kp=2.0, kd=1.0, noise=0.0, max_acc=None, disturbance=False, N=400, dt=0.05):
+    pursuer_pos = np.array([-7.0, -7.0, 0.0])
+    pursuer_vel = np.zeros(3)
+    traj_pursuer = [pursuer_pos.copy()]
+    traj_target = []
+    controller = PositionController(kp, kd, max_acc if max_acc else 10.0)
+
+    for i in range(N):
+        t = i * dt
+        target = helical_target(t)
+        traj_target.append(target.copy())
+
+        # Add sensor noise
+        pos_noise = np.random.normal(0, noise, size=3)
+        current_pos = pursuer_pos + pos_noise
+
+        # Control (desired acc)
+        acc = controller.compute_acceleration(current_pos, pursuer_vel, target)
+
+        # Actuator saturation (redundant if max_acc in controller)
+        if max_acc is not None:
+            acc = np.clip(acc, -max_acc, max_acc)
+
+        # Optional: Random disturbance (spikes)
+        if disturbance and np.random.rand() < 0.05:
+            acc += np.random.uniform(-1, 1, size=3)
+
+        # Physics update
+        pursuer_vel += acc * dt
+        pursuer_pos += pursuer_vel * dt
+        traj_pursuer.append(pursuer_pos.copy())
+
+    traj_pursuer = np.array(traj_pursuer)
+    traj_target = np.array(traj_target)
+    min_len = min(len(traj_pursuer), len(traj_target))
+    distances = np.linalg.norm(traj_pursuer[:min_len] - traj_target[:min_len], axis=1)
+    return traj_pursuer, traj_target, distances
+
+# --- Experiments ---
+dt = 0.05
+N = 400
+
+all_metrics = []
+
+# Gain sweep
+for kp in [1.0, 2.0, 4.0]:
+    start = time.time()
+    _, _, distances = run_sim(kp=kp, kd=1.0, N=N, dt=dt)
+    cpu = time.time() - start
+    settling_time = compute_settling_time(distances, dt)
+    time_to_intercept = compute_time_to_intercept(distances, dt)
+    metrics = {
+        "type": "Gain",
+        "Kp": kp,
+        "Kd": 1.0,
+        "miss_distance": float(distances[-1]),
+        "settling_time": settling_time,
+        "time_to_intercept": time_to_intercept,
+        "energy": float(np.sum(distances) * dt),
+        "cpu_time": cpu,
+    }
+    print(f"[Gain Sweep] Kp={kp}, Kd=1.0 -> {metrics}")
+    all_metrics.append(metrics)
+
+# Noise sweep
+for noise in [0.0, 0.1, 0.3]:
+    start = time.time()
+    _, _, distances = run_sim(kp=2.0, kd=1.0, noise=noise, N=N, dt=dt)
+    cpu = time.time() - start
+    settling_time = compute_settling_time(distances, dt)
+    time_to_intercept = compute_time_to_intercept(distances, dt)
+    metrics = {
+        "type": "Noise",
+        "noise": noise,
+        "miss_distance": float(distances[-1]),
+        "settling_time": settling_time,
+        "time_to_intercept": time_to_intercept,
+        "energy": float(np.sum(distances) * dt),
+        "cpu_time": cpu,
+    }
+    print(f"[Noise Sweep] σ={noise} -> {metrics}")
+    all_metrics.append(metrics)
+
+# Actuator limit sweep
+for max_acc in [1.0, 2.0, 3.0]:
+    start = time.time()
+    _, _, distances = run_sim(kp=2.0, kd=1.0, max_acc=max_acc, N=N, dt=dt)
+    cpu = time.time() - start
+    settling_time = compute_settling_time(distances, dt)
+    time_to_intercept = compute_time_to_intercept(distances, dt)
+    metrics = {
+        "type": "Actuator",
+        "max_acc": max_acc,
+        "miss_distance": float(distances[-1]),
+        "settling_time": settling_time,
+        "time_to_intercept": time_to_intercept,
+        "energy": float(np.sum(distances) * dt),
+        "cpu_time": cpu,
+    }
+    print(f"[Actuator Limit] max_acc={max_acc} -> {metrics}")
+    all_metrics.append(metrics)
+
+# Disturbance test
+for disturbance in [False, True]:
+    start = time.time()
+    _, _, distances = run_sim(kp=2.0, kd=1.0, disturbance=disturbance, N=N, dt=dt)
+    cpu = time.time() - start
+    settling_time = compute_settling_time(distances, dt)
+    time_to_intercept = compute_time_to_intercept(distances, dt)
+    metrics = {
+        "type": "Disturbance",
+        "disturbance": disturbance,
+        "miss_distance": float(distances[-1]),
+        "settling_time": settling_time,
+        "time_to_intercept": time_to_intercept,
+        "energy": float(np.sum(distances) * dt),
+        "cpu_time": cpu,
+    }
+    print(f"[Disturbance] {disturbance} -> {metrics}")
+    all_metrics.append(metrics)
+
+# Save results
+df = pd.DataFrame(all_metrics)
+df.to_csv("tuning_robustness_metrics.csv", index=False)
+
+# Quick bar plots for each group
+def plot_metric(group, xkey, ykey, title, xlabel, ylabel, filename):
+    subset = df[df['type'] == group]
+    plt.figure(figsize=(6, 4))
+    plt.bar(subset[xkey].astype(str), subset[ykey])
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.tight_layout()
+    plt.savefig(f"doc/{filename}")
+    plt.close()
+
+plot_metric('Gain', 'Kp', 'miss_distance', 'Miss Distance vs Gain', 'Kp', 'Miss Distance (m)', 'miss_distance_vs_gain.png')
+plot_metric('Noise', 'noise', 'miss_distance', 'Miss Distance vs Noise', 'Noise σ', 'Miss Distance (m)', 'miss_distance_vs_noise.png')
+plot_metric('Actuator', 'max_acc', 'miss_distance', 'Miss Distance vs Actuator Limit', 'Max Acc (m/s²)', 'Miss Distance (m)', 'miss_distance_vs_maxacc.png')
+plot_metric('Disturbance', 'disturbance', 'miss_distance', 'Miss Distance vs Disturbance', 'Disturbance', 'Miss Distance (m)', 'miss_distance_vs_disturbance.png')
+
+print("\nAll experiments complete. Plots saved to /doc and metrics to tuning_robustness_metrics.csv")
+
