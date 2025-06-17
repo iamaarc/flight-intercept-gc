@@ -39,15 +39,16 @@ python tests/test_guidance_animation.py --guidance pp
 
 🧠 Features & Highlights
 
-Capability	Status	Description
-Pure Pursuit Guidance	✅	Simple directional intercept
-Proportional Navigation	✅	LOS-based acceleration law
-Comparative Evaluation	✅	Metrics + 3D plots + GIF
-Tuning & Robustness Sweeps	✅	Gain/noise/actuator tests
-Monte Carlo (100+ runs)	✅	Stats across noise/disturbance
-Failure Rate / StdDev Metrics	✅	Boxplots and CSV output
-Animated Intercepts (GIF)	✅	Optional visualization
-Self-contained structure	✅	One-command execution & setup
+| Capability                    | Status | Description                    |
+| ----------------------------- | ------ | ------------------------------ |
+| Pure Pursuit Guidance         | ✅      | Simple directional intercept   |
+| Proportional Navigation       | ✅      | LOS-based acceleration law     |
+| Comparative Evaluation        | ✅      | Metrics + 3D plots + GIF       |
+| Tuning & Robustness Sweeps    | ✅      | Gain/noise/actuator tests      |
+| Monte Carlo (100+ runs)       | ✅      | Stats across noise/disturbance |
+| Failure Rate / StdDev Metrics | ✅      | Boxplots and CSV output        |
+| Animated Intercepts (GIF)     | ✅      | Optional visualization         |
+| Self-contained structure      | ✅      | One-command execution & setup  |
 
 
 
