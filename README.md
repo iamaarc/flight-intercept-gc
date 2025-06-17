@@ -30,8 +30,7 @@ This repository contains a modular Python simulation for evaluating and comparin
 # 🚀 Quickstart
 
 ### 1. Install Dependencies
-
-bash
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -40,11 +39,7 @@ pip install -r requirements.txt
 python tests/test_guidance_comparison_enhanced.py
 
 3. Generate Visuals
-
-# Metrics bar plots
 python tests/plot_guidance_metrics.py
-
-# Run and save animated intercept
 python tests/test_guidance_animation.py --guidance pp
 
 🧠 Features & Highlights
@@ -107,4 +102,4 @@ All result files are located in the `doc/` folder and root CSV files.
 ---
 
 **👤 Authored by**: Aayush Chugh  
-**📨 Submitted to**: Take-Home Challenge — *Control Engineer (IMAARC)*
+**📨 Submitted to**: Take-Home Challenge to LENDURAI — *Control Engineer (IAMAARC)*
