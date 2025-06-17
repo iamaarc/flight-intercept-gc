@@ -42,6 +42,7 @@ python tests/test_guidance_comparison_enhanced.py
 python tests/plot_guidance_metrics.py
 python tests/test_guidance_animation.py --guidance pp
 
+
 🧠 Features & Highlights
 
 | Capability                    | Status | Description                    |
