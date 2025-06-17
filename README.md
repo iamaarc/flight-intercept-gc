@@ -4,9 +4,7 @@ This project simulates and evaluates 3D intercept scenarios using different guid
 
 ---
 
-## 🗂️ Project Structure
-
-light-intercept-gc/
+flight-intercept-gc/
 ├── src/ # Core simulation, control, and guidance modules
 ├── tests/ # Scripts for evaluation, animation, Monte Carlo
 ├── doc/ # All generated plots, GIFs, and visual results
@@ -17,34 +15,28 @@ light-intercept-gc/
 ├── README.md # You're here!
 ├── requirements.txt # Python dependencies
 
-yaml
-Copy
-Edit
-
 ---
 
-## 🚀 Quickstart
+# 🚀 Quickstart
 
 ### 1. Install Dependencies
 
-```bash
+bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+
 2. Run Sample Simulation
-bash
-Copy
-Edit
 python tests/test_guidance_comparison_enhanced.py
+
 3. Generate Visuals
-bash
-Copy
-Edit
+
 # Metrics bar plots
 python tests/plot_guidance_metrics.py
 
 # Run and save animated intercept
 python tests/test_guidance_animation.py --guidance pp
+
 🧠 Features & Highlights
 
 Capability	Status	Description
@@ -56,6 +48,8 @@ Monte Carlo (100+ runs)	✅	Stats across noise/disturbance
 Failure Rate / StdDev Metrics	✅	Boxplots and CSV output
 Animated Intercepts (GIF)	✅	Optional visualization
 Self-contained structure	✅	One-command execution & setup
+
+
 
 📊 Output Overview
 
