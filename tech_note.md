@@ -1,1 +1,138 @@
 
+# 🛠️ Technical Note: Flight-Intercept Guidance & Control
+
+## 1. Problem Definition
+
+Design, simulate, and evaluate guidance and control strategies to intercept a moving target using a modular and extensible Python sandbox. The system should:
+
+- Support different guidance laws (e.g., Pure Pursuit, Proportional Navigation).
+- Be robust to disturbances and sensor noise.
+- Allow comparison across performance metrics and visualize behavior.
+
+---
+
+## 2. Simulation Sandbox
+
+| Component     | Details                                                                 |
+|---------------|-------------------------------------------------------------------------|
+| Language      | Python 3.12+                                                             |
+| Environment   | CLI-driven, uses `numpy`, `matplotlib`, `pandas`                        |
+| Vehicle       | 3D kinematic model with heading control (extendable to full dynamics)   |
+| Sensors       | Ideal and noisy position sensors, optional IMU                          |
+| Target Types  | Linear motion and curved (helical) motion                               |
+| Guidance      | Modular framework for plugging in different guidance laws               |
+| Controller    | Position-based outer-loop controller (Proportional)                     |
+
+---
+
+## 3. Target Motion Profiles
+
+### Linear Trajectory:
+```python
+target_pos += target_vel * dt
+
+3D Helical Motion:
+x = R * cos(ωt), y = R * sin(ωt), z = Vz * t
+
+| Parameter        | Value     |
+| ---------------- | --------- |
+| Radius           | 10 m      |
+| Angular velocity | 0.5 rad/s |
+| Vertical speed   | 1.0 m/s   |
+
+
+4. Guidance Laws
+| Guidance Method              | Description                                        |
+| ---------------------------- | -------------------------------------------------- |
+| Pure Pursuit (PP)            | Commands velocity towards target position directly |
+| Proportional Navigation (PN) | Commands acceleration based on LOS rate            |
+
+Parameters:
+pn_gain = 3.0  # For PN
+
+5. Control Design
+
+Outer-Loop: Position Controller
+Implemented as a Proportional-Derivative (PD) controller.
+Converts desired position (from guidance law) into acceleration commands.
+Operates in world-frame, assumes simple translational model
+
+acc_cmd = kp * (target_pos - drone_pos) + kd * (target_vel - drone_vel)
+
+Integrated into simulation
+Tuned to provide stable, responsive intercept behavior
+Inner-Loop: Attitude Controller
+Stub exists: attitude_controller.py
+Intended to map acceleration commands to attitude setpoints.
+Currently idealized: assumes attitude is immediately achieved (no actuator dynamics, no angle-rate feedback loop).
+
+| Component         | Status        | Notes                                          |
+| ----------------- | ------------- | ---------------------------------------------- |
+| Attitude Control  | ⚠️ Simplified | No real motor control or PID attitude loop yet |
+| Actuator Dynamics | ❌ Not modeled | Treated as perfect instantaneous orientation   |
+
+
+6. Integration and Testing
+
+Comparison Scenario:
+Initial pursuer: [0, 0, 0]
+Target follows 3D helical trajectory
+No wind in baseline case
+Simulations run for up to 10s or until intercept
+
+Metrics:
+| Metric            | Description                        |
+| ----------------- | ---------------------------------- |
+| Miss Distance     | Final Euclidean distance to target |
+| Time to Intercept | Time when within 1m of target      |
+| Energy Used       | Sum of squared control inputs      |
+| Failure Rate      | % of simulations with no intercept |
+
+7. Results Summary
+📈 Sample Metrics (Single Run)
+| Method | Miss Distance (m) | Time to Intercept (s) | Energy |
+| ------ | ----------------- | --------------------- | ------ |
+| PP     | 5.92              | 3.55                  | 36.43  |
+| PN     | 15.26             | N/A (fail)            | 0.00   |
+
+📊 Monte Carlo (100 runs, with noise)
+| Metric            | PP (mean ± std) | PN (mean ± std)   |
+| ----------------- | --------------- | ----------------- |
+| Miss Distance     | 6.1 ± 2.0 m     | 13.7 ± 5.5 m      |
+| Time to Intercept | 3.6 ± 0.3 s     | — (failed mostly) |
+| Energy Used       | 37.0 ± 3.2      | \~0.0             |
+| Failures          | 1/100           | 78/100            |
+
+📁 Visuals
+| Type                 | File                                                               |
+| -------------------- | ------------------------------------------------------------------ |
+| Bar Charts           | `doc/guidance_*_comparison.png`                                    |
+| GIFs                 | `doc/guidance_comparison_pp.gif`, `doc/guidance_comparison_pn.gif` |
+| Monte Carlo Boxplots | `doc/monte_carlo_*_boxplot.png`                                    |
+| Failure Stats        | `doc/monte_carlo_failure_count.png`                                |
+
+8. Conclusion & Future Work
+
+Findings:
+Pure Pursuit is more robust and consistent under sensor noise.
+PN fails often in 3D curvature scenarios unless tightly tuned.
+Modular design allows rapid testing and expansion.
+
+🔭 Next Steps:
+Add MPC or deep RL-based guidance
+Integrate nonlinear quadrotor dynamics
+Real-time visualization (WebGL, ROS)
+Expand Monte Carlo to more disturbance models
+
+📎 Appendix
+src/: Core modules (guidance, controllers, simulation).
+tests/: CLI scripts for evaluation:
+test_guidance_comparison_enhanced.py
+test_monte_carlo_guidance.py
+test_guidance_animation.py
+doc/: All outputs (.png, .gif) and visual logs.
+Root CSVs:
+guidance_comparison_metrics.csv
+monte_carlo_results.csv
+tuning_robustness_metrics.csv
+>>>>>>> 0e82da3 (Add structured technical note with summary tables and plots)
