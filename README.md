@@ -74,26 +74,37 @@ All result files are located in the `doc/` folder and root CSV files.
 | `monte_carlo_results.csv`         | CSV         | 100-run summary with noise/disturbance (mean, std, fail) |
 | `tuning_robustness_metrics.csv`   | CSV         | Parameter sweep results for control sensitivity          |
 
-📝 Tech Note
+## 📝 Tech Note
 
-See tech_note.md for:
+📄 Refer to [`tech_note.md`](tech_note.md) for full technical details, including:
 
-Guidance law descriptions
-Simulation setup & assumptions
-Key results and interpretations
-Observations from robustness/Monte Carlo tests
-📌 Notes
+- 🔄 **Guidance Laws**: Pure Pursuit, Proportional Navigation
+- 🛠️ **Simulation Setup**: Assumptions, initial conditions, controller design
+- 📊 **Key Results**: Miss distance, energy, intercept time comparisons
+- 🧪 **Robustness & Monte Carlo**: Insights from param sweeps and noisy trials
 
-Code runs on Python ≥ 3.8
-Compatible with macOS and Linux
-Requires ~10s per Monte Carlo test batch
-PNG/GIF outputs auto-save in /doc
-✅ Submission Checklist
+---
 
- Self-contained code repo
- Tech note (≤ 3 pages)
- Visual result package (GIFs + plots)
- Requirements file
- GitHub-hosted + documented
-Authored by: Aayush Chugh
-Submitted to: [Take-Home Challenge — Control Engineer (IMAARC)]
+## 📌 Notes
+
+- ✅ Runs on **Python ≥ 3.8**
+- 🖥️ Compatible with **macOS and Linux**
+- ⏱️ Approx. **10s per Monte Carlo test batch**
+- 📁 All PNGs, GIFs, and CSV outputs auto-save into `doc/`
+
+---
+
+## ✅ Submission Checklist
+
+| Deliverable                    | Status | Location |
+|-------------------------------|--------|----------|
+| 🧠 Self-contained code repo    | ✅     | GitHub |
+| 📄 Tech note (≤ 3 pages)       | ✅     | [`tech_note.md`](tech_note.md) |
+| 📊 Visual results (GIFs, plots) | ✅     | `doc/` |
+| 📦 requirements.txt            | ✅     | [`requirements.txt`](requirements.txt) |
+| 🌐 Hosted + documented         | ✅     | [`github.com/iamaarc/flight-intercept-gc`](https://github.com/iamaarc/flight-intercept-gc) |
+
+---
+
+**👤 Authored by**: Aayush Chugh  
+**📨 Submitted to**: Take-Home Challenge — *Control Engineer (IMAARC)*
