@@ -1,7 +1,15 @@
 # ✈️ Flight-Intercept Guidance & Control – System Sandbox
 
-This project simulates and evaluates 3D intercept scenarios using different guidance laws under noisy and disturbed conditions. It includes physics-based simulation, comparative evaluation (Pure Pursuit vs Proportional Navigation), and Monte Carlo testing for robustness.
+This repository contains a modular Python simulation for evaluating and comparing guidance and control strategies for a pursuit/intercept scenario. It includes support for:
 
+- Multiple guidance laws (Pure Pursuit, Proportional Navigation)
+- Outer-loop and simplified inner-loop controllers
+- Monte Carlo experiments with noise/disturbance
+- Metric logging (miss distance, energy, time to intercept)
+- Visualizations (plots, 3D animations, GIFs)
+- Clean CLI workflows for reproducibility
+
+---
 ---
 
 ## 📁 Repository Structure
