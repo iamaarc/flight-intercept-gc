@@ -1,0 +1,10 @@
+# Core Python dependencies
+numpy>=1.23
+matplotlib>=3.6
+pandas>=1.5
+
+# Optional: For saving animations as GIFs
+pillow>=9.0
+
+# Used for CLI scripts and file management
+argparse; python_version >= "3.6"
