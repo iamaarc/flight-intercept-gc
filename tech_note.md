@@ -27,13 +27,13 @@ Design, simulate, and evaluate guidance and control strategies to intercept a mo
 
 ## 3. Target Motion Profiles
 
-### Linear Trajectory:
 ```python
+### Linear Trajectory:
 target_pos += target_vel * dt
 
 3D Helical Motion:
 x = R * cos(ωt), y = R * sin(ωt), z = Vz * t
-
+```
 | Parameter        | Value     |
 | ---------------- | --------- |
 | Radius           | 10 m      |
