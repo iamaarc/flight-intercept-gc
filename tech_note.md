@@ -28,7 +28,7 @@ Design, simulate, and evaluate guidance and control strategies to intercept a mo
 ## 3. Target Motion Profiles
 
 ### Linear Trajectory:
-```python
+python
 target_pos += target_vel * dt
 
 3D Helical Motion:
