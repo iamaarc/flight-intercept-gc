@@ -1,153 +1,91 @@
-# Flight-Intercept Guidance & Control – System Sandbox
+# ✈️ Flight-Intercept Guidance & Control – System Sandbox
 
-## Overview
-
-A modular Python sandbox for **interception guidance & control**, supporting both 2D and 3D simulations.  
-Key goals: rapid prototyping, transparent logic, and reproducibility for research or teaching.
+This project simulates and evaluates 3D intercept scenarios using different guidance laws under noisy and disturbed conditions. It includes physics-based simulation, comparative evaluation (Pure Pursuit vs Proportional Navigation), and Monte Carlo testing for robustness.
 
 ---
 
-## Day 1: Sandbox Setup & Simulator
+## 🗂️ Project Structure
 
-- **Simulator:** Custom Python-based ODE (Ordinary Differential Equation) integrator.
-- **Vehicle Model:** 6-DOF quadrotor (3D) and planar point-mass (2D) supported.
-- **Justification:** 
-  - Easy to debug/extend.
-  - Allows fast iterations on G&C logic.
-  - 3D for realism; 2D for rapid concept validation.
+light-intercept-gc/
+├── src/ # Core simulation, control, and guidance modules
+├── tests/ # Scripts for evaluation, animation, Monte Carlo
+├── doc/ # All generated plots, GIFs, and visual results
+├── guidance_comparison_metrics.csv
+├── monte_carlo_results.csv
+├── tuning_robustness_metrics.csv
+├── tech_note.md # Technical summary (≤ 3 pages)
+├── README.md # You're here!
+├── requirements.txt # Python dependencies
 
-**Vehicle Dynamics**
-- **3D:** Newton-Euler rigid body, thrust + 3-axis torque inputs, actuator dynamics.
-- **2D:** Planar motion, simplified kinematics.
-- **Limits:** Thrust: [0, 40 N], Torques: ±1 Nm (3D).
-- **Sensors:** IMU, GPS, barometer, magnetometer (configurable noise/latency).
-
-**Environment**
-- Gravity, ground plane, (optional) wind/disturbance.
-
-
-**Reproducibility:**  
-All parameters in `/doc/tech_note.md`.  
-Run everything with:  
-
-python src/main.py --demo [day] --mode [2d|3d]
-
-Day 2: Target Motion Profiles
-
-Implemented Profiles (in src/target.py):
-2D & 3D:
-Straight-Line Motion: Constant velocity, user-selectable speed/direction.
-Constant Turn/Circular Motion: User-defined turn rate/radius.
-Results
-
-**2D Target Motions**  
-![Target Motion Profiles](doc/day2_target_profiles.png)
-
-**3D Target Trajectory**  
-![Target Trajectory 3D](doc/day2_target_trajectory.png)
-
-Simulated trajectories: Blue = straight/circular (2D), Helix (3D).
-
-Day 3: Guidance & Pursuit Demo
-
-Goal:
-Implement a simple guidance law (Pure Pursuit) where a pursuer tracks a moving target.
-
-2D:
-Target follows circular/arc.
-Pursuer chases using heading/velocity commands.
-Baseline for more advanced interception strategies.
-3D:
-Target follows 3D helix or circular path.
-Pursuer initialized at offset, uses direct pursuit.
-## Day 3: Guidance & Pursuit Demo
-
-**Guidance Demo**  
-![Guidance Demo](doc/day3_guidance_demo.png)
-
-**3D Pure Pursuit**  
-![3D Pure Pursuit](doc/day3_pure_pursuit_3d.png)
-
-
-Orange = pursuer, Blue = target.
-
-Day 4: Outer-Loop Position Controller
-
-Goal:
-Add a PD position controller so the pursuer tracks smoothly, even with noise/disturbances.
-
-2D:
-Converts guidance commands into position/velocity.
-Smoother and more robust than simple pursuit.
-3D:
-Outer loop PD controller.
-Attitude control for roll/pitch/yaw (with demo plots).
-## Day 4: Outer-Loop Position + Attitude Control
-
-**3D Position + Attitude Control**  
-![3D Position + Attitude Control](doc/day4_3d_position_attitude_control.png)
-
-**Position + Attitude Control (Demo 1)**  
-![Position Attitude Demo 1](doc/day4_position_attitude_demo.png)
-
-**Position + Attitude Control (Demo 2)**  
-![Position Attitude Demo 2](doc/day4_position_attitude_control_demo.png)
-
-**Position Controller**  
-![Position Controller](doc/day4_position_controller_demo.png)
-
-**Pursuit Animation**  
-![Pursuit Animation](doc/day4_pursuit_animation.gif)
-
-
-Day 5: Animation, Robustness, Extensions
-
-Animated Simulations:
-All major demos now animated with matplotlib.animation, outputting GIFs in /doc/.
-Example:
-
-
-Noise/Disturbance Injection:
-Optional: Add wind, sensor noise, actuator lag.
-Advanced Guidance:
-Placeholder for Proportional Navigation, optimal control, or swarm logic.
-3D Visualization:
-Future work: Real-time 3D plotting, AirSim/Flightmare bridge.
-How to Run
-
-Clone the repo and install requirements:
-
-sh
+yaml
 Copy
 Edit
-git clone https://github.com/iamaarc/flight-intercept-gc.git
-cd flight-intercept-gc
-python -m venv .venv && source .venv/bin/activate
+
+---
+
+## 🚀 Quickstart
+
+### 1. Install Dependencies
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-To run main simulation (change --demo and --mode as needed):
-
-sh
+2. Run Sample Simulation
+bash
 Copy
 Edit
-python src/main.py --demo day4 --mode 3d
-Or for animation/GIF:
-
-sh
+python tests/test_guidance_comparison_enhanced.py
+3. Generate Visuals
+bash
 Copy
 Edit
-python src/main.py --demo day4 --mode 3d --animate
-Structure
+# Metrics bar plots
+python tests/plot_guidance_metrics.py
 
-src/
-main.py – main simulation launcher
-target.py – target trajectory models
-guidance.py – pursuit logic
-position_controller.py – PD/outer-loop control
-attitude_controller.py – inner-loop (3D only)
-doc/
-All figures, animations, technical notes
-Citation & Contact
+# Run and save animated intercept
+python tests/test_guidance_animation.py --guidance pp
+🧠 Features & Highlights
 
-Made by Aayush Chugh.
-For questions or collaboration, open an issue or contact via GitHub.
+Capability	Status	Description
+Pure Pursuit Guidance	✅	Simple directional intercept
+Proportional Navigation	✅	LOS-based acceleration law
+Comparative Evaluation	✅	Metrics + 3D plots + GIF
+Tuning & Robustness Sweeps	✅	Gain/noise/actuator tests
+Monte Carlo (100+ runs)	✅	Stats across noise/disturbance
+Failure Rate / StdDev Metrics	✅	Boxplots and CSV output
+Animated Intercepts (GIF)	✅	Optional visualization
+Self-contained structure	✅	One-command execution & setup
 
+📊 Output Overview
+
+doc/ contains:
+*.png — bar charts, boxplots, trajectory plots
+*.gif — intercept animations for PP and PN
+CSV logs:
+guidance_comparison_metrics.csv — single-run metrics
+monte_carlo_results.csv — 100-run statistical summary
+tuning_robustness_metrics.csv — controller sensitivity analysis
+📝 Tech Note
+
+See tech_note.md for:
+
+Guidance law descriptions
+Simulation setup & assumptions
+Key results and interpretations
+Observations from robustness/Monte Carlo tests
+📌 Notes
+
+Code runs on Python ≥ 3.8
+Compatible with macOS and Linux
+Requires ~10s per Monte Carlo test batch
+PNG/GIF outputs auto-save in /doc
+✅ Submission Checklist
+
+ Self-contained code repo
+ Tech note (≤ 3 pages)
+ Visual result package (GIFs + plots)
+ Requirements file
+ GitHub-hosted + documented
+Authored by: Aayush Chugh
+Submitted to: [Take-Home Challenge — Control Engineer (IMAARC)]
