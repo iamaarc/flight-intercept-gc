@@ -4,16 +4,19 @@ This project simulates and evaluates 3D intercept scenarios using different guid
 
 ---
 
-flight-intercept-gc/
-├── src/ # Core simulation, control, and guidance modules
-├── tests/ # Scripts for evaluation, animation, Monte Carlo
-├── doc/ # All generated plots, GIFs, and visual results
-├── guidance_comparison_metrics.csv
-├── monte_carlo_results.csv
-├── tuning_robustness_metrics.csv
-├── tech_note.md # Technical summary (≤ 3 pages)
-├── README.md # You're here!
-├── requirements.txt # Python dependencies
+## 📁 Repository Structure
+
+| Path                          | Description                                              |
+|-------------------------------|----------------------------------------------------------|
+| `src/`                        | Core simulation, control, and guidance modules           |
+| `tests/`                      | Scripts for evaluation, animation, Monte Carlo runs      |
+| `doc/`                        | All generated plots, GIFs, and visual results            |
+| `guidance_comparison_metrics.csv` | Summary metrics from guidance comparison (PP vs PN) |
+| `monte_carlo_results.csv`     | Aggregated metrics from Monte Carlo experiments          |
+| `tuning_robustness_metrics.csv` | Results from parameter sweep experiments               |
+| `tech_note.md`                | Technical note (≤ 3 pages) covering all models/results   |
+| `README.md`                   | This file                                                |
+| `requirements.txt`            | Python dependencies for the environment                  |
 
 ---
 
