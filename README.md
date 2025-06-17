@@ -27,20 +27,19 @@ This repository contains a modular Python simulation for evaluating and comparin
 
 ---
 
-# 🚀 Quickstart
 
-### 1. Install Dependencies
-bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+## 🚀 Quickstart Summary
 
-2. Run Sample Simulation
-python tests/test_guidance_comparison_enhanced.py
+| Step | Command | Description |
+|------|---------|-------------|
+| ✅ 1. **Install Dependencies** | `python3 -m venv .venv`<br>`source .venv/bin/activate`<br>`pip install -r requirements.txt` | Set up Python virtual environment and install all required packages |
+| ✅ 2. **Run Sample Simulation** | `python tests/test_guidance_comparison_enhanced.py` | Compares Pure Pursuit vs Proportional Navigation and saves metrics |
+| ✅ 3. **Generate Visuals** | `python tests/plot_guidance_metrics.py` | Bar plots for miss distance, energy, and intercept time |
+| &nbsp; | `python tests/test_guidance_animation.py --guidance pp` | Saves 3D animated GIF for Pure Pursuit (`pp`) or PN (`pn`) |
+| ✅ 4. **Monte Carlo Simulation** | `python tests/test_monte_carlo_guidance.py` | Runs 100 randomized trials per method with noise/disturbance |
+| &nbsp; | *(auto)* | Saves boxplots, failure rate plots, and CSV summary |
+| ✅ 5. **Robustness Tuning Sweep** | `python tests/test_tuning_sweep.py` | Varies controller gains/disturbance levels and logs results |
 
-3. Generate Visuals
-python tests/plot_guidance_metrics.py
-python tests/test_guidance_animation.py --guidance pp
 
 
 🧠 Features & Highlights
