@@ -10,7 +10,6 @@ This repository contains a modular Python simulation for evaluating and comparin
 - Clean CLI workflows for reproducibility
 
 ---
----
 
 ## 📁 Repository Structure
 
@@ -63,15 +62,17 @@ python tests/test_guidance_animation.py --guidance pp
 
 
 
-📊 Output Overview
+## 📊 Output Overview
 
-doc/ contains:
-*.png — bar charts, boxplots, trajectory plots
-*.gif — intercept animations for PP and PN
-CSV logs:
-guidance_comparison_metrics.csv — single-run metrics
-monte_carlo_results.csv — 100-run statistical summary
-tuning_robustness_metrics.csv — controller sensitivity analysis
+All result files are located in the `doc/` folder and root CSV files.
+
+| File / Pattern                     | Type        | Description                                              |
+|------------------------------------|-------------|----------------------------------------------------------|
+| `doc/*.png`                        | Plot Images | Bar charts, boxplots, performance visualizations         |
+| `doc/*.gif`                        | Animations  | Intercept animations (e.g., Pure Pursuit vs PN)          |
+| `guidance_comparison_metrics.csv` | CSV         | Single-run metrics for PP and PN                         |
+| `monte_carlo_results.csv`         | CSV         | 100-run summary with noise/disturbance (mean, std, fail) |
+| `tuning_robustness_metrics.csv`   | CSV         | Parameter sweep results for control sensitivity          |
 
 📝 Tech Note
 
