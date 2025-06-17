@@ -72,6 +72,7 @@ CSV logs:
 guidance_comparison_metrics.csv — single-run metrics
 monte_carlo_results.csv — 100-run statistical summary
 tuning_robustness_metrics.csv — controller sensitivity analysis
+
 📝 Tech Note
 
 See tech_note.md for:
