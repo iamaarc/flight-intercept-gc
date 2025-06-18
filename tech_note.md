@@ -1,6 +1,9 @@
 
 # 🛠️ Technical Note: Flight-Intercept Guidance & Control
 
+**Author**: Aayush Chugh  
+**Date**: 18th June, 2025
+
 ## 1. Problem Definition
 
 Design, simulate, and evaluate guidance and control strategies to intercept a moving target using a modular and extensible Python sandbox. The system should:
@@ -53,7 +56,7 @@ x = R * cos(ωt), y = R * sin(ωt), z = Vz * t
 ```python
 pn_gain = 3.0  # For PN
 ```
-
+> **Observation**: Pure Pursuit works well under general conditions. PN is more sensitive to tuning and less robust in curved trajectories.
 ---
 
 ## 5. Control Design
@@ -80,6 +83,8 @@ Currently idealized: assumes attitude is immediately achieved (no actuator dynam
 | Attitude Control  | ⚠️ Simplified | No real motor control or PID attitude loop yet |
 | Actuator Dynamics | ❌ Not modeled | Treated as perfect instantaneous orientation   |
 
+Stub exists in [`src/controllers/attitude_controller.py`](./src/controllers/attitude_controller.py).  
+Future versions can implement PID or LQR for more realism.
 ---
 
 ## 6. Integration and Testing
@@ -109,6 +114,8 @@ Currently idealized: assumes attitude is immediately achieved (no actuator dynam
 | ------ | ----------------- | --------------------- | ------ |
 | PP     | 5.92              | 3.55                  | 36.43  |
 | PN     | 15.26             | N/A (fail)            | 0.00   |
+> **Interpretation**: PP reaches target reliably; PN often overshoots or fails in this scenario due to lack of curvature compensation.
+---
 
 ### 📊 Monte Carlo (100 runs, with noise)
 
@@ -118,6 +125,8 @@ Currently idealized: assumes attitude is immediately achieved (no actuator dynam
 | Time to Intercept | 3.6 ± 0.3 s     | — (failed mostly) |
 | Energy Used       | 37.0 ± 3.2      | ~0.0              |
 | Failures          | 1/100           | 78/100            |
+> **Interpretation**: Pure Pursuit is significantly more robust under noise. PN requires precise conditions to succeed.
+---
 
 ### 📁 Visuals
 
