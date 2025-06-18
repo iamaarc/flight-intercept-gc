@@ -16,15 +16,17 @@ Design, simulate, and evaluate guidance and control strategies to intercept a mo
 
 ## 2. Simulation Sandbox
 
-| Component     | Details                                                                 |
-|---------------|-------------------------------------------------------------------------|
-| Language      | Python 3.12+                                                             |
-| Environment   | CLI-driven, uses `numpy`, `matplotlib`, `pandas`                        |
-| Vehicle       | 3D kinematic model with heading control (extendable to full dynamics)   |
-| Sensors       | Ideal and noisy position sensors, optional IMU                          |
-| Target Types  | Linear motion and curved (helical) motion                               |
-| Guidance      | Modular framework for plugging in different guidance laws               |
-| Controller    | Position-based outer-loop controller (Proportional)                     |
+| **Component**          | **Details**                                                                                                                                                                |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Language**           | Python 3.12+ with core scientific libraries (`numpy`, `matplotlib`, `pandas`). Chosen for its modularity, clarity, and speed of prototyping.                               |
+| **Simulator**          | Custom-built, discrete-time simulation engine. Kinematics-only modeling ensures lightweight, transparent evaluation of outer-loop G\&C logic.                              |
+| **Vehicle Model**      | 3D thrust-vectoring rigid body modeled via ideal kinematics. No inertia, actuator lag, or drag forces included — sufficient for guidance law benchmarking.                 |
+| **Actuators**          | Control inputs are assumed to be perfectly executed (no delay, saturation, or dynamics). This idealization is acceptable for guidance evaluation.                          |
+| **Environment**        | Disturbance-free by default. Gravity, ground collision, and wind are not modeled. Monte Carlo simulations can inject noise to test robustness.                             |
+| **Sensors**            | Ground-truth access to position in baseline mode. Gaussian noise (zero-mean) optionally added to simulate degraded GPS/IMU. No estimator (e.g., EKF) currently integrated. |
+| **Target Types**       | Two motion profiles implemented: <br>• **Straight-line** constant velocity <br>• **Helical** (curved) path with tunable radius, turn rate, and vertical speed.             |
+| **Guidance Framework** | Pluggable interface supporting multiple laws (e.g., Pure Pursuit, Proportional Navigation). Easy to extend to others (e.g., MPC, RL).                                      |
+| **Controller**         | Outer-loop **PD position controller** converts guidance outputs into body-frame accelerations. Inner-loop is simplified: instantaneous attitude is assumed.                |
 
 ---
 
